@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>建筑画廊</title>
+
+    <style type="text/css">
+
+    *{padding: 0;margin: 0;}/*所有标签元素都遵循这个样式*/
+    body{
+      background-color: #E0FFFF;
+      color: #555;//字体颜色
+      font-family:'fantas','cursive';
+      font-size: 15px;
+      -webkit-font-smoothing:antialiased;/*字体平滑，好看嘛*/
+    }
+
+        /*整体样式*/
+        .wrap{
+          height: 600px;
+          width: 100%;
+          /*设置垂直居中：*/
+          position: absolute;/*父包含快，没有就浏览器窗口*/
+          top: 50%;
+          margin-top: -300px;
+
+          background-color: #FFA07A;
+          overflow:hidden;/*超出隐藏，不显示*/
+
+          -webkit-perspective:800px;/*perspective属性：3D元素距视图的距离*/
+          /*去浏览器style里面增加：trainsform:rotateY(30deg),
+          就是绕Y轴旋转30度*/
+          /*perspective大部分浏览器不支持，得用-webkit-perspective替代*/
+        }
+
+        /*照片样式*/
+        .photo{
+          height:320px;
+          width: 260px;
+          position: absolute;
+          z-index: 1;/*堆叠顺序，越高越前*/
+          box-shadow: 0 0 1px rgba(0,0,0,.01);/*向div元素添加阴影*/
+
+          -webkit-transition:all .5s;
+        }
+        /*正反面样式*/
+        .photo .side{
+          height:100%;
+          width: 100%;
+          background-color: #FFF;
+          position: absolute;
+          top: 0;
+          right: 0;
+          padding: 20px;/*所有内边距*/
+
+          box-sizing: border-box;/*盒模型，边框限定，不可超过*/
+        }
+
+        .photo .front{}
+        /*正面图片*/
+        .photo .front .image{
+          width: 100%;
+          height: 260px;
+          line-height: 250px;/*在250px这块里：垂直居中*/
+          overflow: hidden;/*超出上面设置的都会隐藏*/
+        }
+        /*照片具体样式*/
+        .photo .front .image img{
+          width: 100%;/*一直向上找父包含快*/
+        }
+        /*照片的小标题*/
+        .photo .front .caption{
+          text-align: center;//水平居中
+          font-size: 16px;
+          line-height: 50px;/*在50px这块里：垂直居中*/
+        }
+        /*反面样式*/
+        .photo .reverse{}
+        /*反面描述样式*/
+        .photo .reverse .description{
+          color: #666;
+          font-size: 15px;
+          line-height: 1.5em;/*字体的1.5倍*/
+        }
+
+        /*中间选中的照片样式*/
+        .photo_center{
+          /*height:320px;
+          width: 260px;*/
+          /*设置垂直，水平居中*/
+          left: 50%;
+          top: 50%;
+          margin:-160px 0 0 -130px;/*photo里宽和高的各一半*/
+          z-index: 888;
+        }
+        /*实现翻转*/
+        .photo-wrap{
+          position: absolute;
+          width: 100%;
+          height: 100%;
+
+          -webkit-transform-style:preserve-3d;/*让.photo-wrap里面的两个子元素都支持3D效果*/
+          -webkit-transition:all .5s;
+        }
+        /*正面翻转*/
+        .photo-wrap .front{
+          -webkit-transform:rotateY(0deg);/*绕Y轴旋转0度*/
+        }
+        /*反面翻转*/
+        .photo-wrap .reverse{
+          -webkit-transform:rotateY(180deg);/*绕Y轴旋转180度*/
+        }
+        /*同时控制正反面*/
+        .photo-wrap .side{
+          -webkit-backface-visibility:hidden;/*当元素不面向屏幕时隐藏*/
+        }
+        /*正面状态,来控制photo-wrap的样式*/
+        .photo_front .photo-wrap{
+          -webkit-transform:rotateY(0deg);/*绕Y轴旋转0度*/
+        }
+        /*反面状态，来控制photo-wrap的样式*/
+        .photo_reverse .photo-wrap{
+          -webkit-transform:rotateY(180deg);/*绕Y轴旋转180度*/
+        }
+
+        /*阿里unicode引用，拷贝项目下面生成的font-face*/
+
+        @font-face {
+          font-family: 'iconfont';
+          src: url('iconfont.eot');
+          src: url('iconfont.eot?#iefix') format('embedded-opentype'),
+          url('iconfont.woff') format('woff'),
+          url('iconfont.ttf') format('truetype'),
+          url('iconfont.svg#iconfont') format('svg');
+        }
+
+        .nav{
+          width: 50%;
+          height: 30px;
+          line-height: 30px;
+          position: absolute;
+          left:24.5%;
+          bottom:20px;
+          z-index: 888;
+          background-color: #98FB98;
+          text-align: center;
+        }
+
+        /*普通样式*/
+        .nav .i{
+          width: 30px;
+          height: 30px;
+          display: inline-block;/*按钮应该设计为块级元素*/
+          cursor: pointer;/*鼠标放置小手*/
+          background-color: #478966;
+          text-align: center;
+          border-radius: 50%;/*设置按钮为圆形*/
+          -webkit-transform:scale(.48)/*占48%*/
+          /*-webkit-transition:all .5s;*/
+
+        }
+        .nav .i:after{/*after伪类样式*/
+          content:"\e87f";/*图标的16进制编码*/
+          font-size: 80%;
+          display: inline-block;
+          line-height: 30px;
+          text-align: center;
+          color: #fff;
+          opacity: 0;/*透明度为零*/
+          /*粘贴阿里的 unicode引用里面的.iconfont*/
+          font-family:"iconfont" !important;
+          font-size:16px;
+          font-style:normal;
+          -webkit-font-smoothing: antialiased;
+          -webkit-text-stroke-width: 0.2px;
+          -moz-osx-font-smoothing: grayscale;
+
+        }
+        /*选中样式*/
+        .nav .i_current{
+          -webkit-transform:scale(1);/*当前选中的较大*/
+        }
+
+        /*选中按钮的伪类设计*/
+        .nav .i_current:after{
+          opacity: 1;/*选中的按钮透明度为1*/
+        }
+
+        .nav .i_back{
+          -webkit-transform:rotateY(-180deg);
+          background-color: #555;
+        }
+
+
+        /*最后进行的一些样式优化*/
+        .photo{
+          left: 50%;
+          top: 50%;
+          margin:-160px 0 0 -130px;/*photo里宽和高的各一半*/
+
+        }
+
+        .photo-wrap{
+          -webkit-transform-origin:0% 50%;
+        }
+        /*正面*/
+        .photo_front .photo-wrap{
+          -webkit-transform:translate(0px ,0px) rotateY(0deg);
+
+        }
+
+        .photo_reverse .photo-wrap{
+          -webkit-transform:translate(260px ,0px) rotateY(180deg);/*向右移动再翻转*/
+
+        }
+
+    </style>
+
+  </head>
+  <body onselectstart="return false;"><!--禁止选择-->
+
+    <audio autoplay="autoplay" loop="loop">
+    <source src="童话镇.mp3" type="audio/mp3" />
+    <source src="童话镇.ogg" type="audio/ogg" />
+    <embed height="100" width="100" src="Til_Death.mp3" />
+    Your browser does not support the audio element.
+    </audio>
+
+    <!--2.把视图改成模板字符串-->
+    <div class="wrap" id="wrap">
+      <!--photo实现平移旋转-->
+      <div class="photo photo_front" onclick="turn(this)" id="photo_{{index}}">
+        <!--photo-wrap实现反转-->
+        <div class="photo-wrap">
+
+          <div class="side front"><!--正面，空格是包含两个样式-->
+            <p class="image"><img src="photo/{{img}}" /></p>
+            <p class="caption">{{caption}}</p><!--caption照片的小标题-->
+          </div>
+
+          <div class="side reverse"><!--反面-->
+            <p class="description">{{description}}</p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <script src="photo/data.js"></script>
+
+    <script src="function/function.js"></script>
+
+  </body>
+</html>
