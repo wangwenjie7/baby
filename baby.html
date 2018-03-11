@@ -2,14 +2,14 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>建筑画廊</title>
+    <title>菲凡</title>
 
     <style type="text/css">
 
     *{padding: 0;margin: 0;}/*所有标签元素都遵循这个样式*/
     body{
       background-color: #E0FFFF;
-      color: #555;//字体颜色
+      color: #555;/*字体颜色*/
       font-family:'fantas','cursive';
       font-size: 15px;
       -webkit-font-smoothing:antialiased;/*字体平滑，好看嘛*/
@@ -70,7 +70,7 @@
         }
         /*照片的小标题*/
         .photo .front .caption{
-          text-align: center;//水平居中
+          text-align: center;/*水平居中*/
           font-size: 16px;
           line-height: 50px;/*在50px这块里：垂直居中*/
         }
@@ -220,9 +220,9 @@
   <body onselectstart="return false;"><!--禁止选择-->
 
     <audio autoplay="autoplay" loop="loop">
-    <source src="童话镇.mp3" type="audio/mp3" />
-    <source src="童话镇.ogg" type="audio/ogg" />
-    <embed height="100" width="100" src="Til_Death.mp3" />
+    <source src="蓝皮鼠和大脸猫.mp3" type="audio/mp3" />
+    <source src="蓝皮鼠和大脸猫.ogg" type="audio/ogg" />
+    <embed src="蓝皮鼠和大脸猫.mp3" />
     Your browser does not support the audio element.
     </audio>
 
@@ -234,7 +234,7 @@
         <div class="photo-wrap">
 
           <div class="side front"><!--正面，空格是包含两个样式-->
-            <p class="image"><img src="photo/{{img}}" /></p>
+            <p class="image"><img src="photo/{{img}}"/></p>
             <p class="caption">{{caption}}</p><!--caption照片的小标题-->
           </div>
 
